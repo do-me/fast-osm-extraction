@@ -1,0 +1,18 @@
+[package]
+name = "osm-construction-extractor"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+osmpbfreader = "0.19.1"
+# geo is stable and useful for holding the geometry in memory
+geo = "0.28.0"
+clap = { version = "4.5.4", features = ["derive"] }
+indicatif = { version = "0.17.8", features = ["rayon"] }
+anyhow = "1.0.86"
+
+[profile.release]
+lto = true
+strip = true
+opt-level = 3
+codegen-units = 1
