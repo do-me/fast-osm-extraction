@@ -29,7 +29,7 @@ osmium tags-filter planet-250602.osm.pbf w/highway,construction -o    2964.27s u
 
 ### 🥉 Osmpbfreader-rs (without post-processing)
 
-I had high expectations but was disappointed. Trying to wrestle with the compiler and ever-changing APIs in the Rust ecosystem with dependency issues really gave me headaches. Also, unfortunately the geo ecosystem on Rust is underdeveloped. E.g. GeoPolars is stale: 
+See folder `osm-construction-extractor`. I had high expectations but was simply disappointed. Trying to wrestle with the compiler and ever-changing APIs in the Rust ecosystem with dependency issues really gave me headaches. Also, unfortunately the geo ecosystem on Rust is underdeveloped. E.g. GeoPolars is stale: 
 
 > Update (August 2024): GeoPolars is [blocked](https://github.com/pola-rs/polars/issues/1830#issuecomment-2218102856) on Polars supporting [Arrow extension types](https://github.com/pola-rs/polars/issues/9112), which would allow GeoPolars to persist geometry type information and coordinate reference system (CRS) metadata. It's not feasible to create a `geopolars.GeoDataFrame` as a subclass of a `polars.DataFrame` (similar to how the `geopandas.GeoDataFrame` is a subclass of `pandas.DataFrame`) because polars explicitly [does not support subclassing of core data types](https://github.com/pola-rs/polars/issues/2846#issuecomment-1711799869). See https://github.com/geopolars/geopolars/pull/240.
 
