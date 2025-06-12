@@ -27,7 +27,7 @@ time osmium tags-filter \
 osmium tags-filter planet-250602.osm.pbf w/highway,construction -o    2964.27s user 153.42s system 736% cpu 7:03.38 total
 ```
 
-### 🥉 Osmpbfreader-rs (without post-processing)
+### 🥉 Osmpbfreader-rs (excl. post-processing)
 
 See folder `osm-construction-extractor`. I had high expectations but was simply disappointed. Trying to wrestle with the compiler and ever-changing APIs in the Rust ecosystem with dependency issues really gave me headaches. Also, unfortunately the geo ecosystem on Rust is underdeveloped. E.g. GeoPolars is stale: 
 
@@ -84,6 +84,30 @@ time ./target/release/osm-construction-extractor --input ../planet-250602.osm.pb
 ```
 
 Aborted the run after 15 minutes. Not useful to measure the performance at this point.
+
+### 4 QuackOSM: 1:40 minutes for Germany onle (incl. post-processing)
+
+Special shoutout to QuackOSM, a fantastic tool for quick and hastle-free access to small- to medium-scale areas of interest. If you're interested in a super convenient tool and don't want to bother about having to tweak DuckDB on your system, where to get the pbf from etc. it's great! 
+However, comparing it directly to the heavily optimized pure DuckDB workflow from 🏅, it's much slower and hence not suited for planet-scale workflows. From what I understand it's due to it's swiss army knife kind of character, so that it works for any kind of analysis. 
+
+Look at this beauty, it's just three lines to get the job done!
+
+```python
+%%time
+import quackosm as qosm
+gdf = qosm.convert_pbf_to_parquet("germany-latest.osm.pbf", tags_filter={"highway":"construction"})
+```
+
+```bash
+Finished operation in 0:01:40
+CPU times: user 17min 12s, sys: 1min 17s, total: 18min 29s
+Wall time: 1min 40s
+```
+
+Comparing to the results from 🏅, they are the same. To the left the DuckDB-based workflow, right QuackOSM. The only subtle difference here is that QuackOSM gives you point geometries too that I filtered out. 
+![image](https://github.com/user-attachments/assets/9aadc9a9-fe8e-4940-9667-d3fbd3b6ffc4)
+
+
 
 ### Other contenders
 
